@@ -1,3 +1,16 @@
+GIT
+  remote: https://github.com/elfenars/discordrb
+  revision: 1087cbb1af029bc5381554c56bdad1cf1db3c4ef
+  specs:
+    discordrb (3.2.1)
+      discordrb-webhooks (~> 3.2.0.1)
+      opus-ruby
+      rbnacl (~> 3.4.0)
+      rest-client
+      websocket-client-simple (>= 0.3.0)
+    discordrb-webhooks (3.2.0.1)
+      rest-client
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -10,14 +23,6 @@ GEM
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
     configatron (4.5.1)
-    discordrb (3.2.1)
-      discordrb-webhooks (~> 3.2.0.1)
-      opus-ruby
-      rbnacl (~> 3.4.0)
-      rest-client
-      websocket-client-simple (>= 0.3.0)
-    discordrb-webhooks (3.2.0.1)
-      rest-client
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.2.1)
@@ -85,7 +90,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   configatron
-  discordrb
+  discordrb!
   dotenv
   pry-byebug
   require_all
