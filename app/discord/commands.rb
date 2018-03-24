@@ -2,7 +2,10 @@ module Discord
   module Commands
     extend Discordrb::Commands::CommandContainer
 
-    @admin_roles = []
+    @admin_roles = [
+      171956350438342657,
+      414400751574450177
+    ]
 
     desc = "pong!"
     command :ping, description: desc do |event|
