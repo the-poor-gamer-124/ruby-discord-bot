@@ -29,6 +29,26 @@ module Discord
       $bot.send_message channel, message.join(" ")
     end
 
+    desc = "Assigns role to user (Only admins)"
+    usage = "#{configatron.discord.bot_prefix}role @username @role"
+    usage = "#{configatron.discord.bot_prefix}say #channel some message"
+    command :role, min_args: 2, max_args: 2, description: desc, usage: usage, allowed_roles: @admin_roles do |event, user, role|
+      member   = $bot.parse_mention(user).on event.server
+      req_role = $bot.parse_mention role
+      member.add_role req_role
+      event.respond "Done! #{user} now has the #{role} role 🎉"
+    end
+
+    desc = "Removes role from the user (Only admins)"
+    usage = "#{configatron.discord.bot_prefix}role @username @role"
+    usage = "#{configatron.discord.bot_prefix}say #channel some message"
+    command :derole, min_args: 2, max_args: 2, description: desc, usage: usage, allowed_roles: @admin_roles do |event, user, role|
+      member   = $bot.parse_mention(user).on event.server
+      req_role = $bot.parse_mention role
+      member.remove_role req_role
+      event.respond "Done! #{user} doesn't have the #{role} role anymore ☹️"
+    end
+
     # This can be VERY dangerous in the wrong hands. Just allow the owner or very specific people to use it.
     command :eval, help_available: false do |event, *code|
       event.respond "Only the owner can do this" and break unless "#{event.user.id}" == configatron.discord.owner_id
