@@ -1,3 +1,4 @@
--b
---dir app/
+--clear
+--background
+--pattern **/*.{rb,js,scss,sass,html,erb}
 --notify osx
