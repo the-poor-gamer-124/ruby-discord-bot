@@ -36,11 +36,9 @@ module Discord
       member = $bot.parse_mention(mention_user).on event.server
       role   = $bot.parse_mention mention_role
 
-      # Check if the user has the mentioned role or is an admin.
-      unless (event.user.roles.include? role) || (@admin_roles & event.user.roles.collect(&:id)).any?
-        event.respond "You can't assing roles you don't have yourself, fucking idiot 🍆" and break
-      end
-
+      event.respond "Only <@&414400751574450177> can assign that role 🍆" and break if (mention_role == "<@&426177329312825346>")
+      event.respond "You can't assing roles you don't have yourself, fucking idiot 🍆" and break unless (event.user.roles.include? role) || (@admin_roles & event.user.roles.collect(&:id)).any?
+      
       member.add_role role
       event.respond "Done! #{mention_user} now has the #{mention_role} role 🎉"
     end
@@ -52,10 +50,8 @@ module Discord
       member = $bot.parse_mention(mention_user).on event.server
       role   = $bot.parse_mention mention_role
 
-      # Check if the user has the mentioned role or is an admin.
-      unless (event.user.roles.include? role) || (@admin_roles & event.user.roles.collect(&:id)).any?
-        event.respond "You can't remove roles you don't have yourself fucking cheater 😾" and break
-      end
+      event.respond "Only <@&414400751574450177> can assign that role 🍆" and break if (mention_role == "<@&426177329312825346>")
+      event.respond "You can't assing roles you don't have yourself, fucking idiot 🍆" and break unless (event.user.roles.include? role) || (@admin_roles & event.user.roles.collect(&:id)).any?
 
       member.remove_role role
       event.respond "Done! #{mention_user} doesn't have the #{mention_role} role anymore ☹️"
