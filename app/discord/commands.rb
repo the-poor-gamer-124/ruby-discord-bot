@@ -29,24 +29,36 @@ module Discord
       $bot.send_message channel, message.join(" ")
     end
 
-    desc = "Assigns role to user (Only admins)"
+    desc = "Assigns role to user (You can only assign roles you have)"
     usage = "#{configatron.discord.bot_prefix}role @username @role"
     usage = "#{configatron.discord.bot_prefix}say #channel some message"
-    command :role, min_args: 2, max_args: 2, description: desc, usage: usage, allowed_roles: @admin_roles do |event, user, role|
-      member   = $bot.parse_mention(user).on event.server
-      req_role = $bot.parse_mention role
-      member.add_role req_role
-      event.respond "Done! #{user} now has the #{role} role 🎉"
+    command :role, min_args: 2, max_args: 2, description: desc, usage: usage do |event, mention_user, mention_role|
+      member = $bot.parse_mention(mention_user).on event.server
+      role   = $bot.parse_mention mention_role
+
+      # Check if the user has the mentioned role or is an admin.
+      unless (event.user.roles.include? role) || (@admin_roles & event.user.roles.collect(&:id)).any?
+        event.respond "You can't assing roles you don't have yourself, fucking idiot 🍆" and break
+      end
+
+      member.add_role role
+      event.respond "Done! #{mention_user} now has the #{mention_role} role 🎉"
     end
 
-    desc = "Removes role from the user (Only admins)"
+    desc = "Removes role from the user (You can only remove roles you have)"
     usage = "#{configatron.discord.bot_prefix}role @username @role"
     usage = "#{configatron.discord.bot_prefix}say #channel some message"
-    command :derole, min_args: 2, max_args: 2, description: desc, usage: usage, allowed_roles: @admin_roles do |event, user, role|
-      member   = $bot.parse_mention(user).on event.server
-      req_role = $bot.parse_mention role
-      member.remove_role req_role
-      event.respond "Done! #{user} doesn't have the #{role} role anymore ☹️"
+    command :derole, min_args: 2, max_args: 2, description: desc, usage: usage, allowed_roles: @admin_roles do |event, mention_user, mention_role|
+      member = $bot.parse_mention(mention_user).on event.server
+      role   = $bot.parse_mention mention_role
+
+      # Check if the user has the mentioned role or is an admin.
+      unless (event.user.roles.include? role) || (@admin_roles & event.user.roles.collect(&:id)).any?
+        event.respond "You can't remove roles you don't have yourself fucking cheater 😾" and break
+      end
+
+      member.remove_role role
+      event.respond "Done! #{mention_user} doesn't have the #{mention_role} role anymore ☹️"
     end
 
     # This can be VERY dangerous in the wrong hands. Just allow the owner or very specific people to use it.
